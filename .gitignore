@@ -1,0 +1,4 @@
+neurowell_backend/neurowell_backend/settings.py
+neurowell_backend/venv/
+__pycache__/
+*.pyc
