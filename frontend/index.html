@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neurowell Consultants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ==================== SIGNUP PAGE ==================== -->
+<div id="signupPage" class="page">
+  <div class="login-container" style="max-width:520px;">
+    <div class="login-logo">
+      <div class="logo-icon">🧠</div>
+      <h1>Neurowell Consultants</h1>
+      <p>Create your account</p>
+    </div>
+    <div class="role-selector" style="margin-bottom:24px;">
+      <div class="role-card selected" onclick="selectSignupRole('patient', this)">
+        <div class="role-icon">🙍</div>
+        <div class="role-label">Patient</div>
+      </div>
+      <div class="role-card" onclick="selectSignupRole('psychiatrist', this)">
+        <div class="role-icon">👨‍⚕️</div>
+        <div class="role-label">Psychiatrist</div>
+      </div>
+    </div>
+    <div id="patientFields">
+      <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="Enter your full name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="signupEmail" placeholder="Enter your email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Create a password"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" id="signupPhone" placeholder="+91 9XXXXXXXXX"></div>
+    </div>
+    <div id="psychiatristFields" class="hidden">
+      <div class="form-group"><label>Full Name</label><input type="text" id="signupDoctorName" placeholder="Dr. Full Name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="signupDoctorEmail" placeholder="Enter your email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="signupDoctorPassword" placeholder="Create a password"></div>
+      <div class="form-group"><label>Specialization</label><input type="text" id="signupSpecialization" placeholder="e.g. Depression & Anxiety"></div>
+      <div class="form-group"><label>Years of Experience</label><input type="number" id="signupExperience" placeholder="e.g. 5"></div>
+      <div class="form-group"><label>Consultation Fee (₹)</label><input type="number" id="signupFee" placeholder="e.g. 1500"></div>
+      <div class="form-group"><label>Medical Registration Number</label><input type="text" id="signupRegNumber" placeholder="e.g. MCI-2011-PSY-4821"></div>
+    </div>
+    <button class="btn-primary" onclick="handleSignup()">Create Account</button>
+    <div class="login-footer" style="margin-top:16px;">
+      Already have an account?
+      <span style="color:var(--accent);cursor:pointer;font-weight:600;" onclick="showLogin()"> Sign In</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div id="loginPage" class="page active">
+  <div class="login-container">
+    <div class="login-logo">
+      <div class="logo-icon">🧠</div>
+      <h1>Neurowell Consultants</h1>
+      <p>Advanced Psychiatric Care Platform</p>
+    </div>
+    <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="Enter your email"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter your password"></div>
+    <div class="form-group"><label>Select Your Role</label></div>
+    <div class="role-selector">
+      <div class="role-card selected" onclick="selectRole('patient', this)">
+        <div class="role-icon">🙍</div><div class="role-label">Patient</div>
+      </div>
+      <div class="role-card" onclick="selectRole('psychiatrist', this)">
+        <div class="role-icon">👨‍⚕️</div><div class="role-label">Psychiatrist</div>
+      </div>
+      <div class="role-card" onclick="selectRole('admin', this)">
+        <div class="role-icon">🛡️</div><div class="role-label">Admin</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="handleLogin()">Sign In to Dashboard</button>
+    <div class="login-footer">
+      🔒 Secured with end-to-end encryption &nbsp;|&nbsp; HIPAA Compliant<br><br>
+      New to Neurowell?
+      <span style="color:var(--accent);cursor:pointer;font-weight:600;" onclick="showSignup()"> Create Account</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PATIENT DASHBOARD ==================== -->
+<div id="patientDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="patientOverlay" onclick="closeSidebar('patient')"></div>
+  <div class="sidebar" id="patientSidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Patient Portal</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="patientAvatarInitials">--</div>
+      <div class="user-info">
+        <div class="user-name" id="patientSidebarName">Loading...</div>
+        <div class="user-role">Patient</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('patient','home',this)"><span class="nav-icon">🏠</span><span class="nav-label">Home & Awareness</span></div>
+      <div class="nav-item" onclick="switchTab('patient','book',this)"><span class="nav-icon">📅</span><span class="nav-label">Book Appointment</span></div>
+      <div class="nav-item" onclick="switchTab('patient','appointments',this)"><span class="nav-icon">📋</span><span class="nav-label">My Appointments</span><span class="nav-badge" id="patientApptBadge">0</span></div>
+      <div class="nav-item" onclick="switchTab('patient','doctors',this)"><span class="nav-icon">👨‍⚕️</span><span class="nav-label">Psychiatrist Profiles</span></div>
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="switchTab('patient','profile',this)"><span class="nav-icon">👤</span><span class="nav-label">My Profile</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()"><span>🚪</span> <span>Sign Out</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('patient')">☰</button>
+        <span class="topbar-title" id="patientPageTitle">Home & Awareness</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" id="patientTopAvatar" style="width:36px;height:36px;font-size:13px;cursor:pointer;">--</div>
+      </div>
+    </div>
+    <div class="content-area">
+
+      <!-- HOME TAB -->
+      <div class="tab-panel active" id="patient-home">
+        <div class="hero-section">
+          <h2 id="patientWelcome">Welcome 👋</h2>
+          <p>Mental health is just as important as physical health. You've taken the right step by being here. Let us guide you towards a healthier mind.</p>
+          <div class="hero-btns">
+            <button class="hero-btn hero-btn-white" onclick="switchTabByName('patient','book')">Book a Consultation</button>
+            <button class="hero-btn hero-btn-border" onclick="switchTabByName('patient','doctors')">View Psychiatrists</button>
+          </div>
+        </div>
+        <div class="info-grid">
+          <div class="info-card"><div class="info-icon">🧠</div><h3>What Does a Psychiatrist Do?</h3><p>A psychiatrist is a medical doctor specializing in mental health. They diagnose, treat, and prevent mental, emotional, and behavioral disorders. Unlike psychologists, they can prescribe medications and provide therapy.</p></div>
+          <div class="info-card"><div class="info-icon">⚠️</div><h3>Common Symptoms to Watch</h3><ul><li>Persistent sadness or hopelessness</li><li>Excessive anxiety or worry</li><li>Sudden mood swings</li><li>Difficulty concentrating or sleeping</li><li>Withdrawal from social activities</li><li>Unexplained physical symptoms</li></ul></div>
+          <div class="info-card"><div class="info-icon">🛡️</div><h3>Precautions & Self-Care</h3><ul><li>Never skip prescribed medication</li><li>Maintain regular sleep schedules</li><li>Avoid alcohol and substance use</li><li>Talk to someone you trust</li><li>Practice mindfulness daily</li><li>Attend all follow-up sessions</li></ul></div>
+          <div class="info-card"><div class="info-icon">💊</div><h3>Common Conditions We Treat</h3><ul><li>Depression &amp; Mood Disorders</li><li>Anxiety &amp; Panic Disorders</li><li>Bipolar Disorder</li><li>Schizophrenia</li><li>OCD &amp; PTSD</li><li>ADHD &amp; Eating Disorders</li></ul></div>
+          <div class="info-card"><div class="info-icon">🤝</div><h3>When to Seek Help</h3><p>Seek professional help when symptoms last more than 2 weeks, interfere with daily functioning, or when you feel overwhelmed. Early intervention leads to better outcomes. There is no shame in seeking help — it's a sign of strength.</p></div>
+          <div class="info-card"><div class="info-icon">📞</div><h3>Crisis &amp; Emergency</h3><p><strong>iCall (India):</strong> 9152987821<br><strong>Vandrevala Foundation:</strong> 1860-2662-345<br><strong>NIMHANS:</strong> 080-46110007<br><br>If you or someone you know is in immediate danger, call <strong>112</strong>.</p></div>
+        </div>
+      </div>
+
+      <!-- BOOK APPOINTMENT TAB -->
+      <div class="tab-panel" id="patient-book">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Book a Consultation</div></div>
+          <div class="booking-form-grid">
+            <div><label class="form-label">Select Psychiatrist</label><select class="form-input" id="bookDoctorSelect"><option value="">Loading doctors...</option></select></div>
+            <div><label class="form-label">Consultation Type</label><select class="form-input" id="bookType"><option value="video">Video Consultation</option><option value="in_person">In-Person Visit</option><option value="phone">Phone Consultation</option></select></div>
+            <div><label class="form-label">Preferred Date</label><input type="date" class="form-input" id="apptDate"></div>
+            <div><label class="form-label">Preferred Time Slot</label><select class="form-input" id="bookTime"><option value="09:00:00">9:00 AM</option><option value="10:00:00">10:00 AM</option><option value="11:00:00">11:00 AM</option><option value="14:00:00">2:00 PM</option><option value="15:00:00">3:00 PM</option><option value="16:00:00">4:00 PM</option></select></div>
+            <div><label class="form-label">Your Full Name</label><input type="text" class="form-input" id="bookPatientName" placeholder="Full Name"></div>
+            <div><label class="form-label">Contact Number</label><input type="tel" class="form-input" id="bookPhone" placeholder="+91 9XXXXXXXXX"></div>
+            <div class="full-width"><label class="form-label">Chief Complaint / Reason for Visit</label><textarea class="form-input" id="bookComplaint" rows="3" placeholder="Briefly describe your symptoms..."></textarea></div>
+            <div class="full-width"><label class="form-label">Any Existing Diagnoses or Medications?</label><input type="text" class="form-input" id="bookExisting" placeholder="e.g., Depression — Sertraline 50mg (optional)"></div>
+          </div>
+          <div style="margin-top:24px;">
+            <button class="btn-sm btn-blue" style="padding:12px 32px;font-size:14px;" onclick="bookAppointment()">Confirm Booking</button>
+            &nbsp;&nbsp;
+            <button class="btn-sm btn-outline" style="padding:12px 24px;font-size:14px;" onclick="clearBookingForm()">Clear Form</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY APPOINTMENTS TAB -->
+      <div class="tab-panel" id="patient-appointments">
+        <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">📅</div><div class="stat-value" id="patientUpcomingCount">0</div><div class="stat-label">Upcoming</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">✅</div><div class="stat-value" id="patientCompletedCount">0</div><div class="stat-label">Completed</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">📋</div><div class="stat-value" id="patientTotalCount">0</div><div class="stat-label">Total</div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Upcoming Appointments</div></div>
+          <table class="data-table">
+            <thead><tr><th>Date &amp; Time</th><th>Doctor ID</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="upcomingAppointmentsBody"><tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Past Appointments</div></div>
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Doctor ID</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="pastAppointmentsBody"><tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DOCTOR PROFILES TAB -->
+      <div class="tab-panel" id="patient-doctors">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Our Psychiatrists</div></div>
+          <div class="doctor-grid" id="doctorsGrid">
+            <div style="text-align:center;color:var(--gray-400);padding:40px;grid-column:1/-1;">Loading doctors...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATIENT PROFILE TAB -->
+      <div class="tab-panel" id="patient-profile">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">My Profile</div><button class="btn-sm btn-blue" onclick="savePatientProfile()">Save Changes</button></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-100);">
+            <div class="user-avatar" id="patientProfileAvatar" style="width:72px;height:72px;font-size:24px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));">--</div>
+            <div>
+              <div id="patientProfileName" style="font-size:20px;font-weight:700;color:var(--primary);font-family:'Playfair Display',serif;">Loading...</div>
+              <div id="patientProfileEmail" style="font-size:13px;color:var(--gray-500);margin-top:3px;">--</div>
+            </div>
+          </div>
+          <div class="booking-form-grid">
+            <div><label class="form-label">Full Name</label><input type="text" class="form-input" id="profileFullName" placeholder="Your full name"></div>
+            <div><label class="form-label">Date of Birth</label><input type="date" class="form-input" id="profileDOB"></div>
+            <div><label class="form-label">Email</label><input type="email" class="form-input" id="profileEmail" placeholder="Your email" disabled></div>
+            <div><label class="form-label">Phone</label><input type="tel" class="form-input" id="profilePhone" placeholder="+91 9XXXXXXXXX"></div>
+            <div class="full-width"><label class="form-label">Address</label><input type="text" class="form-input" id="profileAddress" placeholder="Your address"></div>
+            <div><label class="form-label">Emergency Contact</label><input type="text" class="form-input" id="profileEmergencyContact" placeholder="Name (Relation)"></div>
+            <div><label class="form-label">Emergency Phone</label><input type="tel" class="form-input" id="profileEmergencyPhone" placeholder="+91 9XXXXXXXXX"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PSYCHIATRIST DASHBOARD ==================== -->
+<div id="psychiatristDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="psyOverlay" onclick="closeSidebar('psy')"></div>
+  <div class="sidebar" id="psySidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Psychiatrist Portal</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="psyAvatarInitials" style="background:linear-gradient(135deg,#6366f1,#3b9ede);">--</div>
+      <div class="user-info">
+        <div class="user-name" id="psySidebarName">Loading...</div>
+        <div class="user-role">Psychiatrist</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('psy','overview',this)"><span class="nav-icon">📊</span><span class="nav-label">Overview</span></div>
+      <div class="nav-item" onclick="switchTab('psy','schedule',this)"><span class="nav-icon">🗓️</span><span class="nav-label">My Schedule</span></div>
+      <div class="nav-item" onclick="switchTab('psy','appointments',this)"><span class="nav-icon">📋</span><span class="nav-label">Appointments</span><span class="nav-badge" id="psyApptBadge">0</span></div>
+      <div class="nav-item" onclick="switchTab('psy','patients',this)"><span class="nav-icon">👥</span><span class="nav-label">Patient List</span></div>
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="switchTab('psy','profile',this)"><span class="nav-icon">👤</span><span class="nav-label">My Profile</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()"><span>🚪</span> <span>Sign Out</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('psy')">☰</button>
+        <span class="topbar-title" id="psyPageTitle">Overview</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" id="psyTopAvatar" style="width:36px;height:36px;font-size:13px;background:linear-gradient(135deg,#6366f1,#3b9ede);">--</div>
+      </div>
+    </div>
+    <div class="content-area">
+
+      <!-- OVERVIEW -->
+      <div class="tab-panel active" id="psy-overview">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">📅</div><div class="stat-value" id="psyTodayCount">0</div><div class="stat-label">Today's Appointments</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">👥</div><div class="stat-value" id="psyTotalPatients">0</div><div class="stat-label">Total Patients</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">✅</div><div class="stat-value" id="psyCompletedCount">0</div><div class="stat-label">Completed Sessions</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fce7f3;">⏳</div><div class="stat-value" id="psyPendingCount">0</div><div class="stat-label">Pending</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Today's Schedule</div><span class="badge badge-blue" id="psyTodayDate">--</span></div>
+            <div id="psyTodaySchedule"><div style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</div></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Upcoming Appointments</div></div>
+            <div id="psyUpcomingList"><div style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE -->
+      <div class="tab-panel" id="psy-schedule">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">My Appointments Schedule</div></div>
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Time</th><th>Patient</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="psyScheduleBody"><tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PSY APPOINTMENTS -->
+      <div class="tab-panel" id="psy-appointments">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Appointments</div></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Date</th><th>Time</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="psyAppointmentsBody"><tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PATIENT LIST -->
+      <div class="tab-panel" id="psy-patients">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">My Patients</div></div>
+          <div class="search-bar"><span>🔍</span><input type="text" id="psyPatientSearch" placeholder="Search patients..." oninput="filterPsyPatients()"></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Complaint</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody id="psyPatientsBody"><tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PSY PROFILE -->
+      <div class="tab-panel" id="psy-profile">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Professional Profile</div><button class="btn-sm btn-blue" onclick="savePsyProfile()">Save Changes</button></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-100);">
+            <div class="user-avatar" id="psyProfileAvatar" style="width:72px;height:72px;font-size:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#3b9ede);">--</div>
+            <div>
+              <div id="psyProfileName" style="font-size:20px;font-weight:700;color:var(--primary);font-family:'Playfair Display',serif;">Loading...</div>
+              <div id="psyProfileSpec" style="font-size:13px;color:var(--gray-500);margin-top:3px;">--</div>
+              <div style="margin-top:8px;"><span class="badge badge-green">Verified Doctor</span></div>
+            </div>
+          </div>
+          <div class="booking-form-grid">
+            <div><label class="form-label">Full Name</label><input type="text" class="form-input" id="psyProfileFullName" placeholder="Dr. Full Name"></div>
+            <div><label class="form-label">Specialization</label><input type="text" class="form-input" id="psyProfileSpecInput" placeholder="Specialization"></div>
+            <div><label class="form-label">Email</label><input type="email" class="form-input" id="psyProfileEmail" placeholder="Email" disabled></div>
+            <div><label class="form-label">Reg. Number</label><input type="text" class="form-input" id="psyProfileRegNum" placeholder="Registration Number"></div>
+            <div><label class="form-label">Years of Experience</label><input type="number" class="form-input" id="psyProfileExp" placeholder="Years"></div>
+            <div><label class="form-label">Consultation Fee (₹)</label><input type="number" class="form-input" id="psyProfileFee" placeholder="Fee"></div>
+            <div class="full-width"><label class="form-label">Bio / Description</label><textarea class="form-input" id="psyProfileBio" rows="3" placeholder="Tell patients about yourself..."></textarea></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div id="adminDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="adminOverlay" onclick="closeSidebar('admin')"></div>
+  <div class="sidebar" id="adminSidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Admin Panel</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="adminAvatarInitials" style="background:linear-gradient(135deg,#dc2626,#f59e0b);">SA</div>
+      <div class="user-info">
+        <div class="user-name" id="adminSidebarName">Administrator</div>
+        <div class="user-role">System Administrator</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('admin','analytics',this)"><span class="nav-icon">📈</span><span class="nav-label">Analytics Overview</span></div>
+      <div class="nav-item" onclick="switchTab('admin','doctors',this)"><span class="nav-icon">👨‍⚕️</span><span class="nav-label">Manage Doctors</span></div>
+      <div class="nav-item" onclick="switchTab('admin','patients',this)"><span class="nav-icon">👥</span><span class="nav-label">Manage Patients</span></div>
+      <div class="nav-item" onclick="switchTab('admin','appointments',this)"><span class="nav-icon">📋</span><span class="nav-label">All Appointments</span><span class="nav-badge" id="adminPendingBadge">0</span></div>
+      <div class="nav-section-label">System</div>
+      <div class="nav-item" onclick="switchTab('admin','settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">System Settings</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()"><span>🚪</span> <span>Sign Out</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('admin')">☰</button>
+        <span class="topbar-title" id="adminPageTitle">Analytics Overview</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" style="width:36px;height:36px;font-size:13px;background:linear-gradient(135deg,#dc2626,#f59e0b);">SA</div>
+      </div>
+    </div>
+    <div class="content-area">
+
+      <!-- ANALYTICS -->
+      <div class="tab-panel active" id="admin-analytics">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">👥</div><div class="stat-value" id="adminTotalPatients">0</div><div class="stat-label">Total Patients</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">👨‍⚕️</div><div class="stat-value" id="adminTotalDoctors">0</div><div class="stat-label">Active Psychiatrists</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">📅</div><div class="stat-value" id="adminTotalAppts">0</div><div class="stat-label">Total Appointments</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fce7f3;">⏳</div><div class="stat-value" id="adminPendingAppts">0</div><div class="stat-label">Pending Appointments</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Appointment Status Breakdown</div></div>
+            <div id="adminStatusBreakdown"><div style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</div></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Quick Actions</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <button class="btn-sm btn-blue" style="width:100%;padding:12px;" onclick="switchTabByName('admin','doctors')">👨‍⚕️ &nbsp; Manage Doctors</button>
+              <button class="btn-sm btn-blue" style="width:100%;padding:12px;" onclick="switchTabByName('admin','patients')">👥 &nbsp; Manage Patients</button>
+              <button class="btn-sm btn-blue" style="width:100%;padding:12px;" onclick="switchTabByName('admin','appointments')">📋 &nbsp; View All Appointments</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANAGE DOCTORS -->
+      <div class="tab-panel" id="admin-doctors">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Psychiatrists</div></div>
+          <div class="search-bar"><span>🔍</span><input type="text" id="adminDoctorSearch" placeholder="Search doctors..." oninput="filterAdminDoctors()"></div>
+          <table class="data-table">
+            <thead><tr><th>Doctor</th><th>Specialization</th><th>Experience</th><th>Fee</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="adminDoctorsBody"><tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MANAGE PATIENTS -->
+      <div class="tab-panel" id="admin-patients">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Patients</div><button class="btn-sm btn-outline" onclick="exportPatients()">Export CSV</button></div>
+          <div class="search-bar"><span>🔍</span><input type="text" id="adminPatientSearch" placeholder="Search patients..." oninput="filterAdminPatients()"></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Email</th><th>Phone</th><th>Status</th></tr></thead>
+            <tbody id="adminPatientsBody"><tr><td colspan="4" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN APPOINTMENTS -->
+      <div class="tab-panel" id="admin-appointments">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Appointments</div><button class="btn-sm btn-outline" onclick="exportAppointments()">Export CSV</button></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="adminAppointmentsBody"><tr><td colspan="6" style="text-align:center;color:var(--gray-400);padding:24px;">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="tab-panel" id="admin-settings">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">System Settings</div><button class="btn-sm btn-blue" onclick="showToast('Settings saved!')">Save All</button></div>
+          <div style="display:grid;gap:20px;">
+            <div><label class="form-label">Platform Name</label><input type="text" class="form-input" value="Neurowell Consultants" style="max-width:400px;"></div>
+            <div><label class="form-label">Support Email</label><input type="email" class="form-input" value="support@neurowell.com" style="max-width:400px;"></div>
+            <div><label class="form-label">Default Consultation Duration (minutes)</label><select class="form-input" style="max-width:200px;"><option>30</option><option selected>45</option><option>60</option></select></div>
+            <div><label class="form-label">Booking Window (days ahead)</label><input type="number" class="form-input" value="30" style="max-width:200px;"></div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <label class="form-label">Feature Toggles</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Enable Video Consultations</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Enable Online Booking</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox"> Maintenance Mode</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Email Notifications</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING SUCCESS MODAL -->
+<div class="modal-overlay hidden" id="bookingModal">
+  <div class="modal">
+    <div class="success-modal-icon">🎉</div>
+    <div class="success-modal-title">Appointment Booked!</div>
+    <div class="success-modal-msg">Your consultation has been successfully scheduled. You will receive a confirmation on your registered email and phone number.</div>
+    <button class="btn-primary" onclick="closeModal()">Go to My Appointments</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
