@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neurowell Consultants</title>
+ 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+ 
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<!-- ==================== LOGIN PAGE ==================== -->
+<div id="loginPage" class="page active">
+  <div class="login-container">
+    <div class="login-logo">
+      <div class="logo-icon">🧠</div>
+      <h1>Neurowell Consultants</h1>
+      <p>Advanced Psychiatric Care Platform</p>
+    </div>
+ 
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" value="patient@neurowell.com">
+    </div>
+ 
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter your password" value="password123">
+    </div>
+ 
+    <div class="form-group">
+      <label>Select Your Role</label>
+    </div>
+ 
+    <div class="role-selector">
+      <div class="role-card selected" onclick="selectRole('patient', this)">
+        <div class="role-icon">🙍</div>
+        <div class="role-label">Patient</div>
+      </div>
+      <div class="role-card" onclick="selectRole('psychiatrist', this)">
+        <div class="role-icon">👨‍⚕️</div>
+        <div class="role-label">Psychiatrist</div>
+      </div>
+      <div class="role-card" onclick="selectRole('admin', this)">
+        <div class="role-icon">🛡️</div>
+        <div class="role-label">Admin</div>
+      </div>
+    </div>
+ 
+    <button class="btn-primary" onclick="handleLogin()">Sign In to Dashboard</button>
+ 
+    <div class="login-footer">
+      🔒 Secured with end-to-end encryption &nbsp;|&nbsp; HIPAA Compliant
+    </div>
+  </div>
+</div>
+ 
+<!-- ==================== PATIENT DASHBOARD ==================== -->
+<div id="patientDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="patientOverlay" onclick="closeSidebar('patient')"></div>
+ 
+  <div class="sidebar" id="patientSidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Patient Portal</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar">AR</div>
+      <div class="user-info">
+        <div class="user-name">Arjun Reddy</div>
+        <div class="user-role">Patient</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('patient','home',this)">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home & Awareness</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('patient','book',this)">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Book Appointment</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('patient','appointments',this)">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">My Appointments</span>
+        <span class="nav-badge">2</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('patient','doctors',this)">
+        <span class="nav-icon">👨‍⚕️</span>
+        <span class="nav-label">Psychiatrist Profiles</span>
+      </div>
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="switchTab('patient','profile',this)">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">My Profile</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()">
+        <span>🚪</span> <span>Sign Out</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('patient')">☰</button>
+        <span class="topbar-title" id="patientPageTitle">Home & Awareness</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" style="width:36px;height:36px;font-size:13px;cursor:pointer;">AR</div>
+      </div>
+    </div>
+ 
+    <div class="content-area">
+ 
+      <!-- HOME TAB -->
+      <div class="tab-panel active" id="patient-home">
+        <div class="hero-section">
+          <h2>Welcome back, Arjun 👋</h2>
+          <p>Mental health is just as important as physical health. You've taken the right step by being here. Let us guide you towards a healthier mind.</p>
+          <div class="hero-btns">
+            <button class="hero-btn hero-btn-white" onclick="switchTabByName('patient','book')">Book a Consultation</button>
+            <button class="hero-btn hero-btn-border" onclick="switchTabByName('patient','doctors')">View Psychiatrists</button>
+          </div>
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">🧠</div>
+            <h3>What Does a Psychiatrist Do?</h3>
+            <p>A psychiatrist is a medical doctor specializing in mental health. They diagnose, treat, and prevent mental, emotional, and behavioral disorders. Unlike psychologists, they can prescribe medications and provide therapy.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">⚠️</div>
+            <h3>Common Symptoms to Watch</h3>
+            <ul>
+              <li>Persistent sadness or hopelessness</li>
+              <li>Excessive anxiety or worry</li>
+              <li>Sudden mood swings</li>
+              <li>Difficulty concentrating or sleeping</li>
+              <li>Withdrawal from social activities</li>
+              <li>Unexplained physical symptoms</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🛡️</div>
+            <h3>Precautions & Self-Care</h3>
+            <ul>
+              <li>Never skip prescribed medication</li>
+              <li>Maintain regular sleep schedules</li>
+              <li>Avoid alcohol and substance use</li>
+              <li>Talk to someone you trust</li>
+              <li>Practice mindfulness daily</li>
+              <li>Attend all follow-up sessions</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">💊</div>
+            <h3>Common Conditions We Treat</h3>
+            <ul>
+              <li>Depression &amp; Mood Disorders</li>
+              <li>Anxiety &amp; Panic Disorders</li>
+              <li>Bipolar Disorder</li>
+              <li>Schizophrenia</li>
+              <li>OCD &amp; PTSD</li>
+              <li>ADHD &amp; Eating Disorders</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🤝</div>
+            <h3>When to Seek Help</h3>
+            <p>Seek professional help when symptoms last more than 2 weeks, interfere with daily functioning, or when you feel overwhelmed. Early intervention leads to better outcomes. There is no shame in seeking help — it's a sign of strength.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📞</div>
+            <h3>Crisis &amp; Emergency</h3>
+            <p><strong>iCall (India):</strong> 9152987821<br>
+            <strong>Vandrevala Foundation:</strong> 1860-2662-345<br>
+            <strong>NIMHANS:</strong> 080-46110007<br><br>
+            If you or someone you know is in immediate danger, call <strong>112</strong>.</p>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- BOOK APPOINTMENT TAB -->
+      <div class="tab-panel" id="patient-book">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">Book a Consultation</div>
+          </div>
+          <div class="booking-form-grid">
+            <div>
+              <label class="form-label">Select Psychiatrist</label>
+              <select class="form-input">
+                <option>Dr. Priya Sharma — Child &amp; Adolescent</option>
+                <option>Dr. Rohan Mehta — Depression &amp; Anxiety</option>
+                <option>Dr. Ananya Rao — Bipolar &amp; Schizophrenia</option>
+                <option>Dr. Vikram Nair — Addiction &amp; Substance Use</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Consultation Type</label>
+              <select class="form-input">
+                <option>Video Consultation</option>
+                <option>In-Person Visit</option>
+                <option>Phone Consultation</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Preferred Date</label>
+              <input type="date" class="form-input" id="apptDate">
+            </div>
+            <div>
+              <label class="form-label">Preferred Time Slot</label>
+              <select class="form-input">
+                <option>9:00 AM – 9:30 AM</option>
+                <option>10:00 AM – 10:30 AM</option>
+                <option>11:00 AM – 11:30 AM</option>
+                <option>2:00 PM – 2:30 PM</option>
+                <option>3:00 PM – 3:30 PM</option>
+                <option>4:00 PM – 4:30 PM</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Your Full Name</label>
+              <input type="text" class="form-input" value="Arjun Reddy" placeholder="Full Name">
+            </div>
+            <div>
+              <label class="form-label">Contact Number</label>
+              <input type="tel" class="form-input" placeholder="+91 9XXXXXXXXX">
+            </div>
+            <div class="full-width">
+              <label class="form-label">Chief Complaint / Reason for Visit</label>
+              <textarea class="form-input" rows="3" placeholder="Briefly describe your symptoms or reason for consultation..."></textarea>
+            </div>
+            <div class="full-width">
+              <label class="form-label">Any Existing Diagnoses or Medications?</label>
+              <input type="text" class="form-input" placeholder="e.g., Depression — Sertraline 50mg (optional)">
+            </div>
+          </div>
+          <div style="margin-top:24px;">
+            <button class="btn-sm btn-blue" style="padding:12px 32px;font-size:14px;" onclick="bookAppointment()">Confirm Booking</button>
+            &nbsp;&nbsp;
+            <button class="btn-sm btn-outline" style="padding:12px 24px;font-size:14px;">Clear Form</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- MY APPOINTMENTS TAB -->
+      <div class="tab-panel" id="patient-appointments">
+        <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">📅</div><div class="stat-value">2</div><div class="stat-label">Upcoming Appointments</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">✅</div><div class="stat-value">8</div><div class="stat-label">Completed Sessions</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">🏥</div><div class="stat-value">3</div><div class="stat-label">Months in Care</div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Upcoming Appointments</div></div>
+          <table class="data-table">
+            <thead><tr><th>Date &amp; Time</th><th>Psychiatrist</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Mar 25, 2026</strong><br><span style="font-size:12px;color:var(--gray-400);">10:00 AM</span></td><td>Dr. Priya Sharma</td><td>Video Call</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Joining session...')">Join</button></td></tr>
+              <tr><td><strong>Apr 02, 2026</strong><br><span style="font-size:12px;color:var(--gray-400);">3:00 PM</span></td><td>Dr. Rohan Mehta</td><td>In-Person</td><td><span class="badge badge-yellow">Pending</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Appointment cancelled')">Cancel</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Past Appointments</div></div>
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Psychiatrist</th><th>Type</th><th>Status</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Feb 12, 2026</td><td>Dr. Priya Sharma</td><td>Video Call</td><td><span class="badge badge-teal">Completed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Loading notes...')">View</button></td></tr>
+              <tr><td>Jan 28, 2026</td><td>Dr. Priya Sharma</td><td>Video Call</td><td><span class="badge badge-teal">Completed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Loading notes...')">View</button></td></tr>
+              <tr><td>Jan 08, 2026</td><td>Dr. Rohan Mehta</td><td>In-Person</td><td><span class="badge badge-teal">Completed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Loading notes...')">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- DOCTOR PROFILES TAB -->
+      <div class="tab-panel" id="patient-doctors">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Our Psychiatrists</div></div>
+          <div class="doctor-grid">
+            <div class="doctor-card">
+              <div class="doctor-avatar" style="background:linear-gradient(135deg,#6366f1,#3b9ede);">PS</div>
+              <h3>Dr. Priya Sharma</h3>
+              <div class="specialty">Child &amp; Adolescent Psychiatry</div>
+              <div class="rating">⭐ 4.9 &nbsp;·&nbsp; 12 yrs experience</div>
+              <div class="availability">● Available Today</div>
+              <button class="btn-sm btn-blue" style="width:100%" onclick="switchTabByName('patient','book')">Book Now</button>
+            </div>
+            <div class="doctor-card">
+              <div class="doctor-avatar" style="background:linear-gradient(135deg,#0891b2,#1a3c6e);">RM</div>
+              <h3>Dr. Rohan Mehta</h3>
+              <div class="specialty">Depression &amp; Anxiety Disorders</div>
+              <div class="rating">⭐ 4.8 &nbsp;·&nbsp; 9 yrs experience</div>
+              <div class="availability">● Available Tomorrow</div>
+              <button class="btn-sm btn-blue" style="width:100%" onclick="switchTabByName('patient','book')">Book Now</button>
+            </div>
+            <div class="doctor-card">
+              <div class="doctor-avatar" style="background:linear-gradient(135deg,#059669,#0891b2);">AR</div>
+              <h3>Dr. Ananya Rao</h3>
+              <div class="specialty">Bipolar Disorder &amp; Schizophrenia</div>
+              <div class="rating">⭐ 4.7 &nbsp;·&nbsp; 15 yrs experience</div>
+              <div class="availability" style="color:var(--warning);">● Next: Mar 27</div>
+              <button class="btn-sm btn-outline" style="width:100%" onclick="switchTabByName('patient','book')">Book Now</button>
+            </div>
+            <div class="doctor-card">
+              <div class="doctor-avatar" style="background:linear-gradient(135deg,#7c3aed,#6366f1);">VN</div>
+              <h3>Dr. Vikram Nair</h3>
+              <div class="specialty">Addiction &amp; Substance Use</div>
+              <div class="rating">⭐ 4.6 &nbsp;·&nbsp; 11 yrs experience</div>
+              <div class="availability">● Available Today</div>
+              <button class="btn-sm btn-blue" style="width:100%" onclick="switchTabByName('patient','book')">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- PATIENT PROFILE TAB -->
+      <div class="tab-panel" id="patient-profile">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">My Profile</div>
+            <button class="btn-sm btn-blue" onclick="showToast('Profile saved successfully!')">Save Changes</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-100);">
+            <div class="user-avatar" style="width:72px;height:72px;font-size:24px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));">AR</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;color:var(--primary);font-family:'Playfair Display',serif;">Arjun Reddy</div>
+              <div style="font-size:13px;color:var(--gray-500);margin-top:3px;">Patient ID: NW-2024-1087 &nbsp;·&nbsp; Member since Jan 2026</div>
+              <button class="btn-sm btn-outline" style="margin-top:10px;font-size:12px;" onclick="showToast('Upload photo feature coming soon!')">Change Photo</button>
+            </div>
+          </div>
+          <div class="booking-form-grid">
+            <div><label class="form-label">Full Name</label><input type="text" class="form-input" value="Arjun Reddy"></div>
+            <div><label class="form-label">Date of Birth</label><input type="date" class="form-input" value="1995-07-14"></div>
+            <div><label class="form-label">Email</label><input type="email" class="form-input" value="patient@neurowell.com"></div>
+            <div><label class="form-label">Phone</label><input type="tel" class="form-input" value="+91 9876543210"></div>
+            <div class="full-width"><label class="form-label">Address</label><input type="text" class="form-input" value="Hyderabad, Telangana, India"></div>
+            <div><label class="form-label">Emergency Contact</label><input type="text" class="form-input" value="Ramesh Reddy (Father)"></div>
+            <div><label class="form-label">Emergency Phone</label><input type="tel" class="form-input" value="+91 9123456780"></div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<!-- ==================== PSYCHIATRIST DASHBOARD ==================== -->
+<div id="psychiatristDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="psyOverlay" onclick="closeSidebar('psy')"></div>
+  <div class="sidebar" id="psySidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Psychiatrist Portal</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" style="background:linear-gradient(135deg,#6366f1,#3b9ede);">PS</div>
+      <div class="user-info">
+        <div class="user-name">Dr. Priya Sharma</div>
+        <div class="user-role">Psychiatrist</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('psy','overview',this)"><span class="nav-icon">📊</span><span class="nav-label">Overview</span></div>
+      <div class="nav-item" onclick="switchTab('psy','schedule',this)"><span class="nav-icon">🗓️</span><span class="nav-label">My Schedule</span></div>
+      <div class="nav-item" onclick="switchTab('psy','appointments',this)"><span class="nav-icon">📋</span><span class="nav-label">Appointments</span><span class="nav-badge">3</span></div>
+      <div class="nav-item" onclick="switchTab('psy','patients',this)"><span class="nav-icon">👥</span><span class="nav-label">Patient List</span></div>
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="switchTab('psy','profile',this)"><span class="nav-icon">👤</span><span class="nav-label">My Profile</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()"><span>🚪</span> <span>Sign Out</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('psy')">☰</button>
+        <span class="topbar-title" id="psyPageTitle">Overview</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" style="width:36px;height:36px;font-size:13px;background:linear-gradient(135deg,#6366f1,#3b9ede);">PS</div>
+      </div>
+    </div>
+    <div class="content-area">
+ 
+      <!-- OVERVIEW -->
+      <div class="tab-panel active" id="psy-overview">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">📅</div><div class="stat-value">5</div><div class="stat-label">Today's Appointments</div><div class="stat-change up">▲ 2 more than yesterday</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">👥</div><div class="stat-value">34</div><div class="stat-label">Active Patients</div><div class="stat-change up">▲ 4 this month</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">✅</div><div class="stat-value">128</div><div class="stat-label">Sessions This Year</div><div class="stat-change neutral">On track</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fce7f3;">⭐</div><div class="stat-value">4.9</div><div class="stat-label">Patient Rating</div><div class="stat-change up">▲ 0.1 this quarter</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Today's Schedule</div><span class="badge badge-blue">Mar 22, 2026</span></div>
+            <div class="patient-item"><div class="patient-avatar" style="background:linear-gradient(135deg,#6366f1,#3b9ede);">AR</div><div class="patient-info"><div class="p-name">Arjun Reddy</div><div class="p-meta">9:00 AM · Video Call</div></div><span class="badge badge-green">Confirmed</span></div>
+            <div class="patient-item"><div class="patient-avatar" style="background:linear-gradient(135deg,#059669,#0891b2);">SK</div><div class="patient-info"><div class="p-name">Sneha Kapoor</div><div class="p-meta">11:00 AM · In-Person</div></div><span class="badge badge-yellow">Pending</span></div>
+            <div class="patient-item"><div class="patient-avatar" style="background:linear-gradient(135deg,#dc2626,#f59e0b);">MK</div><div class="patient-info"><div class="p-name">Mohammed Khan</div><div class="p-meta">2:30 PM · Video Call</div></div><span class="badge badge-green">Confirmed</span></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Recent Activity</div></div>
+            <div style="font-size:13px;color:var(--gray-600);line-height:2;">
+              <div>📝 &nbsp;Session notes added for Arjun Reddy</div>
+              <div>🆕 &nbsp;New patient request: Divya Menon</div>
+              <div>💊 &nbsp;Prescription updated for Sneha Kapoor</div>
+              <div>📅 &nbsp;Rescheduled: MK session moved to 2:30 PM</div>
+              <div>✅ &nbsp;Completed 3 sessions yesterday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- SCHEDULE -->
+      <div class="tab-panel" id="psy-schedule">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Weekly Schedule — March 2026</div><button class="btn-sm btn-blue" onclick="showToast('Schedule updated!')">Manage Availability</button></div>
+          <div class="schedule-grid">
+            <div class="schedule-day today"><div class="day-name">Sun</div><div class="day-num">22</div><div class="appt-dot" style="background:rgba(255,255,255,0.5);"></div></div>
+            <div class="schedule-day has-appt"><div class="day-name">Mon</div><div class="day-num">23</div><div class="appt-dot"></div></div>
+            <div class="schedule-day has-appt"><div class="day-name">Tue</div><div class="day-num">24</div><div class="appt-dot"></div></div>
+            <div class="schedule-day has-appt"><div class="day-name">Wed</div><div class="day-num">25</div><div class="appt-dot"></div></div>
+            <div class="schedule-day"><div class="day-name">Thu</div><div class="day-num">26</div><div style="font-size:10px;color:var(--gray-300);">Off</div></div>
+            <div class="schedule-day has-appt"><div class="day-name">Fri</div><div class="day-num">27</div><div class="appt-dot"></div></div>
+            <div class="schedule-day"><div class="day-name">Sat</div><div class="day-num">28</div><div style="font-size:10px;color:var(--gray-300);">Off</div></div>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Time</th><th>Patient</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>9:00 AM</td><td>Arjun Reddy</td><td>Video Call</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Starting session...')">Start</button></td></tr>
+              <tr><td>11:00 AM</td><td>Sneha Kapoor</td><td>In-Person</td><td><span class="badge badge-yellow">Pending</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Approved!')">Approve</button></td></tr>
+              <tr><td>2:30 PM</td><td>Mohammed Khan</td><td>Video Call</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Starting session...')">Start</button></td></tr>
+              <tr><td>4:00 PM</td><td>Divya Menon</td><td>Phone</td><td><span class="badge badge-gray">Requested</span></td><td><button class="btn-sm btn-success" onclick="showToast('Confirmed!')">Confirm</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- PSY APPOINTMENTS -->
+      <div class="tab-panel" id="psy-appointments">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Appointments</div><div style="display:flex;gap:8px;"><button class="btn-sm btn-outline">Export</button><button class="btn-sm btn-blue" onclick="showToast('Filter applied!')">Filter</button></div></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Date</th><th>Time</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Arjun Reddy</td><td>Mar 22</td><td>9:00 AM</td><td>Video</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Notes opened')">Notes</button></td></tr>
+              <tr><td>Sneha Kapoor</td><td>Mar 23</td><td>11:00 AM</td><td>In-Person</td><td><span class="badge badge-yellow">Pending</span></td><td><button class="btn-sm btn-success" onclick="showToast('Approved!')">Approve</button></td></tr>
+              <tr><td>Mohammed Khan</td><td>Mar 24</td><td>2:30 PM</td><td>Video</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Notes opened')">Notes</button></td></tr>
+              <tr><td>Divya Menon</td><td>Mar 27</td><td>10:00 AM</td><td>Phone</td><td><span class="badge badge-gray">Requested</span></td><td><button class="btn-sm btn-success" onclick="showToast('Confirmed!')">Confirm</button></td></tr>
+              <tr><td>Ramesh Iyer</td><td>Feb 28</td><td>3:00 PM</td><td>Video</td><td><span class="badge badge-teal">Completed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Report viewed')">Report</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- PATIENT LIST -->
+      <div class="tab-panel" id="psy-patients">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">My Patients</div></div>
+          <div class="search-bar"><span>🔍</span><input type="text" placeholder="Search patients..."></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Age</th><th>Condition</th><th>Last Visit</th><th>Sessions</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#6366f1,#3b9ede);">AR</div>Arjun Reddy</div></td><td>31</td><td>Anxiety Disorder</td><td>Feb 28</td><td>8</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#059669,#0891b2);">SK</div>Sneha Kapoor</div></td><td>24</td><td>Depression</td><td>Mar 10</td><td>5</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#dc2626,#f59e0b);">MK</div>Mohammed Khan</div></td><td>42</td><td>Bipolar Disorder</td><td>Mar 15</td><td>12</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#7c3aed,#6366f1);">DM</div>Divya Menon</div></td><td>29</td><td>OCD</td><td>Mar 01</td><td>3</td><td><span class="badge badge-yellow">New</span></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#0891b2,#1a3c6e);">RI</div>Ramesh Iyer</div></td><td>55</td><td>PTSD</td><td>Feb 28</td><td>9</td><td><span class="badge badge-gray">On Hold</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- PSY PROFILE -->
+      <div class="tab-panel" id="psy-profile">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Professional Profile</div><button class="btn-sm btn-blue" onclick="showToast('Profile updated!')">Save Changes</button></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-100);">
+            <div class="user-avatar" style="width:72px;height:72px;font-size:24px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#3b9ede);">PS</div>
+            <div>
+              <div style="font-size:20px;font-weight:700;color:var(--primary);font-family:'Playfair Display',serif;">Dr. Priya Sharma</div>
+              <div style="font-size:13px;color:var(--gray-500);margin-top:3px;">Child &amp; Adolescent Psychiatry &nbsp;·&nbsp; Reg No: MCI-2011-PSY-4821</div>
+              <div style="margin-top:8px;"><span class="badge badge-green">Verified Doctor</span></div>
+            </div>
+          </div>
+          <div class="booking-form-grid">
+            <div><label class="form-label">Full Name</label><input type="text" class="form-input" value="Dr. Priya Sharma"></div>
+            <div><label class="form-label">Specialization</label><input type="text" class="form-input" value="Child &amp; Adolescent Psychiatry"></div>
+            <div><label class="form-label">Email</label><input type="email" class="form-input" value="psychiatrist@neurowell.com"></div>
+            <div><label class="form-label">Phone</label><input type="tel" class="form-input" value="+91 9876512340"></div>
+            <div><label class="form-label">Years of Experience</label><input type="number" class="form-input" value="12"></div>
+            <div><label class="form-label">Consultation Fee (₹)</label><input type="number" class="form-input" value="1500"></div>
+            <div class="full-width"><label class="form-label">Bio / Description</label><textarea class="form-input" rows="3">Specialized in child and adolescent mental health with 12 years of experience.</textarea></div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div id="adminDashboard" class="dashboard">
+  <div class="sidebar-overlay" id="adminOverlay" onclick="closeSidebar('admin')"></div>
+  <div class="sidebar" id="adminSidebar">
+    <div class="sidebar-logo">
+      <div class="brand">Neuro<span>well</span></div>
+      <div class="subtitle">Admin Panel</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" style="background:linear-gradient(135deg,#dc2626,#f59e0b);">SA</div>
+      <div class="user-info">
+        <div class="user-name">Sneha Admin</div>
+        <div class="user-role">System Administrator</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="switchTab('admin','analytics',this)"><span class="nav-icon">📈</span><span class="nav-label">Analytics Overview</span></div>
+      <div class="nav-item" onclick="switchTab('admin','doctors',this)"><span class="nav-icon">👨‍⚕️</span><span class="nav-label">Manage Doctors</span></div>
+      <div class="nav-item" onclick="switchTab('admin','patients',this)"><span class="nav-icon">👥</span><span class="nav-label">Manage Patients</span></div>
+      <div class="nav-item" onclick="switchTab('admin','appointments',this)"><span class="nav-icon">📋</span><span class="nav-label">All Appointments</span><span class="nav-badge">5</span></div>
+      <div class="nav-section-label">System</div>
+      <div class="nav-item" onclick="switchTab('admin','settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">System Settings</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="logout()"><span>🚪</span> <span>Sign Out</span></div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="menu-toggle" onclick="toggleSidebar('admin')">☰</button>
+        <span class="topbar-title" id="adminPageTitle">Analytics Overview</span>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        <div class="user-avatar" style="width:36px;height:36px;font-size:13px;background:linear-gradient(135deg,#dc2626,#f59e0b);">SA</div>
+      </div>
+    </div>
+    <div class="content-area">
+ 
+      <!-- ANALYTICS -->
+      <div class="tab-panel active" id="admin-analytics">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:#dbeafe;">👥</div><div class="stat-value">247</div><div class="stat-label">Total Patients</div><div class="stat-change up">▲ 18 this month</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;">👨‍⚕️</div><div class="stat-value">12</div><div class="stat-label">Active Psychiatrists</div><div class="stat-change up">▲ 2 new onboarded</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fef9c3;">📅</div><div class="stat-value">89</div><div class="stat-label">Appointments This Month</div><div class="stat-change up">▲ 12% vs last month</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:#fce7f3;">💰</div><div class="stat-value">₹4.2L</div><div class="stat-label">Revenue This Month</div><div class="stat-change up">▲ 8% growth</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Monthly Appointments</div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>January</span><span>62</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:70%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>February</span><span>74</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:83%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>March (so far)</span><span>89</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:100%"></div></div></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header"><div class="section-title">Top Conditions</div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>Anxiety Disorders</span><span>34%</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:34%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>Depression</span><span>28%</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:28%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>Bipolar Disorder</span><span>15%</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:15%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>Schizophrenia</span><span>11%</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:11%"></div></div></div>
+            <div class="analytics-bar-wrap"><div class="analytics-bar-label"><span>Other</span><span>12%</span></div><div class="analytics-bar-bg"><div class="analytics-bar-fill" style="width:12%"></div></div></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- MANAGE DOCTORS -->
+      <div class="tab-panel" id="admin-doctors">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">Psychiatrists</div><button class="btn-sm btn-blue" onclick="showToast('Add doctor form coming soon!')">+ Add Doctor</button></div>
+          <div class="search-bar"><span>🔍</span><input type="text" placeholder="Search doctors..."></div>
+          <table class="data-table">
+            <thead><tr><th>Doctor</th><th>Specialization</th><th>Experience</th><th>Patients</th><th>Rating</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#6366f1,#3b9ede);">PS</div>Dr. Priya Sharma</div></td><td>Child &amp; Adolescent</td><td>12 yrs</td><td>34</td><td>⭐ 4.9</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#0891b2,#1a3c6e);">RM</div>Dr. Rohan Mehta</div></td><td>Depression &amp; Anxiety</td><td>9 yrs</td><td>28</td><td>⭐ 4.8</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#059669,#0891b2);">AR</div>Dr. Ananya Rao</div></td><td>Bipolar &amp; Schizophrenia</td><td>15 yrs</td><td>41</td><td>⭐ 4.7</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:10px;"><div class="patient-avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#7c3aed,#6366f1);">VN</div>Dr. Vikram Nair</div></td><td>Addiction &amp; Substance</td><td>11 yrs</td><td>22</td><td>⭐ 4.6</td><td><span class="badge badge-yellow">On Leave</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- MANAGE PATIENTS -->
+      <div class="tab-panel" id="admin-patients">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Patients</div><div style="display:flex;gap:8px;"><button class="btn-sm btn-outline" onclick="showToast('Exported!')">Export</button><button class="btn-sm btn-blue" onclick="showToast('Add patient form coming soon!')">+ Add Patient</button></div></div>
+          <div class="search-bar"><span>🔍</span><input type="text" placeholder="Search patients..."></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Age</th><th>Assigned Doctor</th><th>Condition</th><th>Joined</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Arjun Reddy</td><td>31</td><td>Dr. Priya Sharma</td><td>Anxiety</td><td>Jan 2026</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td>Sneha Kapoor</td><td>24</td><td>Dr. Priya Sharma</td><td>Depression</td><td>Feb 2026</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td>Mohammed Khan</td><td>42</td><td>Dr. Ananya Rao</td><td>Bipolar</td><td>Nov 2025</td><td><span class="badge badge-green">Active</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td>Divya Menon</td><td>29</td><td>Dr. Rohan Mehta</td><td>OCD</td><td>Mar 2026</td><td><span class="badge badge-yellow">New</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+              <tr><td>Ramesh Iyer</td><td>55</td><td>Dr. Vikram Nair</td><td>PTSD</td><td>Oct 2025</td><td><span class="badge badge-gray">Inactive</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Profile opened')">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- ADMIN APPOINTMENTS -->
+      <div class="tab-panel" id="admin-appointments">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">All Appointments</div><button class="btn-sm btn-outline" onclick="showToast('Exported!')">Export CSV</button></div>
+          <table class="data-table">
+            <thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Arjun Reddy</td><td>Dr. Priya Sharma</td><td>Mar 22</td><td>Video</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Details loaded')">Details</button></td></tr>
+              <tr><td>Sneha Kapoor</td><td>Dr. Priya Sharma</td><td>Mar 23</td><td>In-Person</td><td><span class="badge badge-yellow">Pending</span></td><td><button class="btn-sm btn-success" onclick="showToast('Approved!')">Approve</button></td></tr>
+              <tr><td>Mohammed Khan</td><td>Dr. Ananya Rao</td><td>Mar 24</td><td>Video</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Details loaded')">Details</button></td></tr>
+              <tr><td>Divya Menon</td><td>Dr. Rohan Mehta</td><td>Mar 27</td><td>Phone</td><td><span class="badge badge-gray">Requested</span></td><td><button class="btn-sm btn-danger" onclick="showToast('Cancelled!')">Cancel</button></td></tr>
+              <tr><td>Ramesh Iyer</td><td>Dr. Vikram Nair</td><td>Feb 28</td><td>Video</td><td><span class="badge badge-teal">Completed</span></td><td><button class="btn-sm btn-outline" onclick="showToast('Report loaded')">Report</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- SETTINGS -->
+      <div class="tab-panel" id="admin-settings">
+        <div class="section-card">
+          <div class="section-header"><div class="section-title">System Settings</div><button class="btn-sm btn-blue" onclick="showToast('Settings saved!')">Save All</button></div>
+          <div style="display:grid;gap:20px;">
+            <div><label class="form-label">Platform Name</label><input type="text" class="form-input" value="Neurowell Consultants" style="max-width:400px;"></div>
+            <div><label class="form-label">Support Email</label><input type="email" class="form-input" value="support@neurowell.com" style="max-width:400px;"></div>
+            <div><label class="form-label">Default Consultation Duration (minutes)</label><select class="form-input" style="max-width:200px;"><option>30</option><option selected>45</option><option>60</option></select></div>
+            <div><label class="form-label">Booking Window (days ahead)</label><input type="number" class="form-input" value="30" style="max-width:200px;"></div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <label class="form-label">Feature Toggles</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Enable Video Consultations</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Enable Online Booking</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox"> Maintenance Mode</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;color:var(--gray-700);"><input type="checkbox" checked> Email Notifications</label>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<!-- ==================== BOOKING SUCCESS MODAL ==================== -->
+<div class="modal-overlay hidden" id="bookingModal">
+  <div class="modal">
+    <div class="success-modal-icon">🎉</div>
+    <div class="success-modal-title">Appointment Booked!</div>
+    <div class="success-modal-msg">Your consultation has been successfully scheduled. You will receive a confirmation on your registered email and phone number.</div>
+    <button class="btn-primary" onclick="closeModal()">Go to My Appointments</button>
+  </div>
+</div>
+ 
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+ 
+<!-- JavaScript — must be at the bottom -->
+<script src="script.js"></script>
+ 
+</body>
+</html>
